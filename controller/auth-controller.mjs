@@ -30,6 +30,20 @@ async function Myregister(req, res, next) {
     }
 }
 
+async function MyLogin(req, res, next) {
+    try {
+        const user = await authModels.findOne({ username: req.body.username })
+        if (!user) return next(createError(402, "your not admin user"))
 
+        const checkPassword = bcrypt.compareSync(req.body.password, user.password)
+        if (!checkPassword) return next(createError(402, "pasword wrong or bad request"))
 
-export { Myregister }
+        return res
+            .status(200)
+            .json({ succes: true, author: "muhammad dava fahreza", checkPassword })
+    } catch (err) {
+        next(createError(402, "your not authorized to acces"))
+    }
+}
+
+export { Myregister, MyLogin }

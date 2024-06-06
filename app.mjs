@@ -20,7 +20,7 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(cors(corsOptions))
 
-app.get("/", async(req, res) => {
+app.get("/", async (req, res) => {
     res.status(200).json({
         succes: true,
         message: "welcome to my api",
